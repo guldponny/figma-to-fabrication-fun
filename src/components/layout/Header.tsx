@@ -2,7 +2,7 @@ import React from "react";
 
 export const Header: React.FC = () => {
   return (
-    <header className="justify-between items-center flex w-full gap-[40px_100px] flex-wrap p-5 border-[Global.Stroke.Width.05] border-solid border-[NeutralStroke3.Rest] max-md:max-w-full">
+    <header className="bg-white justify-between items-center flex w-full gap-[40px_100px] flex-wrap p-5 border-[Global.Stroke.Width.05] border-solid border-[NeutralStroke3.Rest] max-md:max-w-full">
       <div className="self-stretch flex items-center gap-2 text-sm text-[#424242] font-semibold whitespace-nowrap leading-5 my-auto">
         <img
           src="https://cdn.builder.io/api/v1/image/assets/ea9d9d7c994b4302a357b7bba73c5fba/1c5767423b048c683b50e02dc3dccfc623023d16?placeholderIfAbsent=true"
