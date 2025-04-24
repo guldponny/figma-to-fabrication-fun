@@ -1,15 +1,16 @@
+
 import React from "react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "lucide-react";
-import { Search } from "lucide-react";
+import { CalendarIcon, Search } from "lucide-react";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -156,21 +157,23 @@ export default function Index() {
                   <PopoverContent className="w-full p-0">
                     <Command>
                       <CommandInput placeholder="Search applications..." />
-                      <CommandEmpty>No application found.</CommandEmpty>
-                      <CommandGroup>
-                        {applications.map((app) => (
-                          <CommandItem
-                            key={app}
-                            value={app}
-                            onSelect={(currentValue) => {
-                              setSelectedApp(currentValue);
-                              setOpen(false);
-                            }}
-                          >
-                            {app}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
+                      <CommandList>
+                        <CommandEmpty>No application found.</CommandEmpty>
+                        <CommandGroup>
+                          {applications.map((app) => (
+                            <CommandItem
+                              key={app}
+                              value={app}
+                              onSelect={(currentValue) => {
+                                setSelectedApp(currentValue);
+                                setOpen(false);
+                              }}
+                            >
+                              {app}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
                     </Command>
                   </PopoverContent>
                 </Popover>
