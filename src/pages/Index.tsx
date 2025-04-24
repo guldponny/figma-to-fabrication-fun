@@ -1,16 +1,16 @@
-
 import React from "react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
+import { Search } from "lucide-react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
@@ -51,6 +51,8 @@ const sampleData = [
 export default function Index() {
   const [activeTab, setActiveTab] = React.useState("content");
   const [date, setDate] = React.useState<Date>();
+  const [open, setOpen] = React.useState(false);
+  const [selectedApp, setSelectedApp] = React.useState("");
 
   const applications = Array.from({ length: 10 }, (_, i) => `Application ${i + 1}`);
 
@@ -59,7 +61,7 @@ export default function Index() {
       <Header />
 
       <main className="flex w-full items-stretch flex-1 flex-wrap h-full pt-px max-md:max-w-full">
-        <div className="bg-[color:var(--colorNeutralBackground2)] min-w-60 overflow-hidden gap-4 flex-1 shrink basis-[0%] px-8 py-4 max-md:max-w-full max-md:px-5">
+        <div className="bg-[color:var(--colorNeutralBackground2)] min-w-60 overflow-hidden gap-4 flex-1 shrink basis-[0%] px-8 py-4 max-md:max-w-full">
           <div className="flex w-full flex-col max-md:max-w-full">
             <Breadcrumb items={breadcrumbItems} />
           </div>
@@ -139,18 +141,39 @@ export default function Index() {
 
               <div className="space-y-2">
                 <label className="block text-xs">Applications</label>
-                <Select>
-                  <SelectTrigger className="w-full bg-[#E3F7EF]">
-                    <SelectValue placeholder="Select application" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {applications.map((app) => (
-                      <SelectItem key={app} value={app.toLowerCase()}>
-                        {app}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-full bg-[#E3F7EF] justify-between"
+                    >
+                      {selectedApp || "Select application..."}
+                      <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search applications..." />
+                      <CommandEmpty>No application found.</CommandEmpty>
+                      <CommandGroup>
+                        {applications.map((app) => (
+                          <CommandItem
+                            key={app}
+                            value={app}
+                            onSelect={(currentValue) => {
+                              setSelectedApp(currentValue);
+                              setOpen(false);
+                            }}
+                          >
+                            {app}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               <div className="space-y-2">
