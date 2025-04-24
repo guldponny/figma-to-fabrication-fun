@@ -1,8 +1,16 @@
+
 import React from "react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Popover,
   PopoverContent,
@@ -43,6 +51,8 @@ const sampleData = [
 export default function Index() {
   const [activeTab, setActiveTab] = React.useState("content");
   const [date, setDate] = React.useState<Date>();
+
+  const applications = Array.from({ length: 10 }, (_, i) => `Application ${i + 1}`);
 
   return (
     <div className="min-h-screen bg-background">
@@ -129,10 +139,20 @@ export default function Index() {
 
               <div className="space-y-2">
                 <label className="block text-xs">Applications</label>
-                <select className="w-full bg-[#E3F7EF] rounded border p-1">
-                  <option>Select application</option>
-                </select>
+                <Select>
+                  <SelectTrigger className="w-full bg-[#E3F7EF]">
+                    <SelectValue placeholder="Select application" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {applications.map((app) => (
+                      <SelectItem key={app} value={app.toLowerCase()}>
+                        {app}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
+
               <div className="space-y-2">
                 <label className="block text-xs">Status</label>
                 <select className="w-full bg-[#E3F7EF] rounded border p-1">
