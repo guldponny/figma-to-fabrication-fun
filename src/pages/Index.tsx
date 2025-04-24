@@ -1,4 +1,13 @@
 import React from "react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Header } from "@/components/layout/Header";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { DataTable } from "@/components/tables/DataTable";
@@ -33,6 +42,7 @@ const sampleData = [
 
 export default function Index() {
   const [activeTab, setActiveTab] = React.useState("content");
+  const [date, setDate] = React.useState<Date>();
 
   return (
     <div className="min-h-screen bg-background">
@@ -90,12 +100,33 @@ export default function Index() {
                   <option>Select type</option>
                 </select>
               </div>
+              
               <div className="space-y-2">
                 <label className="block text-xs">Created</label>
-                <select className="w-full bg-[#E3F7EF] rounded border p-1">
-                  <option>Select date</option>
-                </select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={`w-full bg-[#E3F7EF] justify-start text-left font-normal ${
+                        !date && "text-muted-foreground"
+                      }`}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
+
               <div className="space-y-2">
                 <label className="block text-xs">Applications</label>
                 <select className="w-full bg-[#E3F7EF] rounded border p-1">
